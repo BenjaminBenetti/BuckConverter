@@ -36,13 +36,14 @@ void sampleADCFreeRun(uint8_t port){
 }
 
 ISR(ADC_vect) {
-  cli();
   lastADCSample = (uint16_t)ADCL;
   lastADCSample |= (((uint16_t)ADCH) << 8);
-  sei();
 }
 
 // get last sample result
 uint16_t getADCSample() {
-  return lastADCSample;
+  cli();
+  uint16_t tmp = lastADCSample;
+  sei();
+  return tmp;
 }

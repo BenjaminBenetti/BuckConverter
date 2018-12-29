@@ -6,8 +6,7 @@
 
 #include "ADC.h"
 #include "PWM.h"
-
-uint16_t POWER_TARGET_TMP = 125;
+#include "UI.h"
 
 uint16_t calcPWMUpdate(uint16_t v, uint16_t vt){
   // "always 1" seems the best method of the ones I'v tried. perhaps some thing better
@@ -18,9 +17,10 @@ uint16_t calcPWMUpdate(uint16_t v, uint16_t vt){
 uint16_t currPWM = 0;
 void checkNSwitch() {
   uint16_t currVoltage = getADCSample();
+  uint16_t currTarget = getPowerTarget();
 
-  if (currVoltage < POWER_TARGET_TMP) {
-    uint16_t update = calcPWMUpdate(currVoltage, POWER_TARGET_TMP);
+  if (currVoltage < currTarget) {
+    uint16_t update = calcPWMUpdate(currVoltage, currTarget);
     if (currPWM + update <= 0x3ff){
       currPWM += update;
     } else {
@@ -28,7 +28,7 @@ void checkNSwitch() {
     }
     setDutyCycle(currPWM);
   } else {
-    uint16_t update = calcPWMUpdate(currVoltage, POWER_TARGET_TMP);
+    uint16_t update = calcPWMUpdate(currVoltage, currTarget);
     if ((int)currPWM - (int)update >= 0){
       currPWM -= update;
     } else {
@@ -40,9 +40,9 @@ void checkNSwitch() {
 
 
 void setup() {
-  DDRB = (1 << PORTB1);
   initADC();
   initPWM();
+  initUI();
   sampleADCFreeRun(0x0);
   sei();
 }

@@ -8,6 +8,7 @@ void setDutyCycle(uint16_t val) {
 }
 
 void initPWM() {
+  DDRB |= (1 << PORTB1);
   setDutyCycle(0x0);
   // clear OC1A on compare match, set OC1A when down counting
   // Phase correct PWM 10 bit.
