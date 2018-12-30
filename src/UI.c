@@ -5,12 +5,12 @@
 #include <avr/interrupt.h>
 
 #define MAX_POWER 1024
-#define POWER_INCREMENT 25
+#define POWER_INCREMENT 10
 uint16_t powerTarget = 0;
 
 // how many times must the debounce timer trigger before the debounce period ends.
 // this is a way of extending the range of the 8bit timer0.
-#define DEBOUNCE_TIME_MULTIPLE 16 // about 250ms
+#define DEBOUNCE_TIME_MULTIPLE 8 // about 125ms
 uint16_t debounceCounter = 0;
 // true if debounce timer is running. (block all control input if not false)
 bool isInDebounce = false;
