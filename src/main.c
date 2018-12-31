@@ -116,10 +116,11 @@ void setup() {
     initEEPROM();
   }
 
-  numToSegmentList(displayDigits, 0, -2);
   sampleADCFreeRun(0x0);
   pwrTargetStorageAddress = findPowerTargetInEEPROM();
-  setPowerTarget(loadPowerTarget(pwrTargetStorageAddress));
+  oldPowerTarget = loadPowerTarget(pwrTargetStorageAddress);
+  setPowerTarget(oldPowerTarget);
+  numToSegmentList(displayDigits, VOLTAGE_DIVIDER_COMPENSATION_VALUE * ((float)getPowerTarget() / 1024.0f), -2);
 
   sei();
 }
