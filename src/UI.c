@@ -1,5 +1,6 @@
 #include "UI.h"
 
+#include "Arduino.h"
 #include <stdbool.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -10,7 +11,7 @@ uint16_t powerTarget = 0;
 
 // how many times must the debounce timer trigger before the debounce period ends.
 // this is a way of extending the range of the 8bit timer0.
-#define DEBOUNCE_TIME_MULTIPLE 8 // about 125ms
+#define DEBOUNCE_TIME_MULTIPLE 16 // about 250ms
 uint16_t debounceCounter = 0;
 // true if debounce timer is running. (block all control input if not false)
 bool isInDebounce = false;
@@ -42,6 +43,12 @@ uint16_t getPowerTarget() {
   uint16_t tmp = powerTarget;
   sei();
   return tmp;
+}
+
+void setPowerTarget(uint16_t target) {
+  cli();
+  powerTarget = min(1024, max(0, target));
+  sei();
 }
 
 void stopDebounceTimer() {

@@ -9,5 +9,7 @@ void initUI();
 // get the current power target 0 - 1024.
 uint16_t getPowerTarget();
 
+// set power target in range 0 - 1024
+void setPowerTarget(uint16_t targ);
 
 #endif
