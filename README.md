@@ -32,6 +32,8 @@ After that print out the case with:
 
 Now sandwich all the electronics in to the case and you should end up with some thing similar to [this](https://github.com/CanadianCommander/BuckConverter/blob/master/Hardware/BuckConverterFull.stl)
 
+![DYI Buck Converter](https://github.com/CanadianCommander/BuckConverter/blob/master/Hardware/DIYBuckConverterComplete.JPG)
+
 ## Code Build
 - download repo.
 - install [arduion make](https://github.com/sudar/Arduino-Makefile)
